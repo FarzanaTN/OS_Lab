@@ -53,7 +53,7 @@ void __sys_init(void)
 	__enable_fpu(); //enable FPU single precision floating point unit
 	__ISB();
 	NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
-	__SysTick_init(1000);	//enable systick for 1ms
+	__SysTick_init(180000);	//enable systick for 1ms
 	//SYS_RTC_init();
 	SerialLin2_init(__CONSOLE,0);
 	SerialLin6_init(&huart6,0);
@@ -91,7 +91,7 @@ void SYS_ROUTINE(void)
 void display_group_info(void)
 {
 	kprintf("Empty Group!! -- Update Now\n");
-	kprintf("Group No: B_8 ");
+	kprintf("Group No: B ");
 	kprintf("Farzana Tasnim (14)\n");
 	kprintf("Amina Islam (36)\n");
 	kprintf("Rezaunnabi Ruhan (58)\n");

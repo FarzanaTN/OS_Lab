@@ -61,6 +61,8 @@ void __SysTick_init(uint32_t reload)
     Set the Reload Value, period of the timer
     */
     SYSTICK->LOAD = (reload - 1) & 0x00FFFFFF;
+    //SYSTICK->LOAD = ;
+
     /*
     3.
     Clear the Counter:
@@ -135,8 +137,10 @@ void __updateSysTick(uint32_t count)
 
 uint32_t __getTime(void)
 {
+    //return (_systick_count+(SYSTICK->LOAD-SYSTICK->VAL)/(PLL_N*1000));
+
     return _systick_count;
-    // return (uint32_t)(_systick_count * SYSTICK->LOAD) + (SYSTICK->LOAD - SYSTICK->VAL);
+    //return (uint32_t)(_systick_count * SYSTICK->LOAD) + (SYSTICK->LOAD - SYSTICK->VAL);
 }
 
 uint32_t __get__Second(void)
@@ -149,11 +153,12 @@ uint32_t __get__Minute(void)
 }
 uint32_t __get__Hour(void)
 {
-    return _get__Minute() / 60;
+    return __get__Minute() / 60;
 }
 void SysTick_Handler(void)
 {
     _systick_count++;
+   //_systick_count+=(SYSTICK->LOAD)/(PLL_N*1000);
 }
 
 void __enable_fpu()
@@ -164,8 +169,10 @@ void __enable_fpu()
 uint8_t ms_delay(uint32_t delay)
 {
     uint32_t start_tick = _systick_count;
-    while ((_systick_count - start_tick) < delay)
-        ;
+    while ((_systick_count - start_tick) < delay){
+        __WFI();
+    }
+        
     return 0; // The return type suggests a status, 0 for success.
 }
 

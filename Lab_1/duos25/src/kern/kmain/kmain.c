@@ -42,9 +42,39 @@
 void kmain(void)
 {
     __sys_init();
-    
+    //uint32_t last_ms = 0;
+    // uint32_t timeee = __get__Second();
+    // kprintf("Time passed total: %d seconds\n", timeee);
     while (1)
     {
-      
+        
+    //    uint32_t now_ms = __getTime();   // returns current time in ms
+    // if (now_ms - last_ms >= 10)      // 30 ms elapsed
+    //{
+        //last_ms = now_ms;
+
+        uint32_t seconds = __get__Second();
+        kprintf("Time passed total: %d seconds\n", seconds);
+        ms_delay(1000);
+        //kprintf("lastms variable %d\n", last_ms++);
+    //}
     }
 }
+/*
+void kmain(void)
+{
+    __sys_init();  // make sure this calls __SysTick_init(SystemCoreClock/1000);
+
+    while (1)
+    {
+        uint32_t hours   = __get__Hour();
+        uint32_t minutes = __get__Minute() % 60;
+        uint32_t seconds = __get__Second() % 60;
+
+        kprintf("Stopwatch: %02d:%02d:%02d\n", hours, minutes, seconds);
+
+        ms_delay(1000); // update every second
+    }
+}
+*/
+

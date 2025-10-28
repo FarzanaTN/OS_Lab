@@ -103,6 +103,25 @@ typedef struct task_tcb{
 	uint32_t digital_sinature; //current value is 0x00000001
 } TCB_TypeDef;
 
+// typedef struct t_task_tcb {
+// uint32_t magic_number; // Magic number for stack/structure integrity (e.g., 0xFECABAA0)
+// uint16_t task_id; // Unique 16-bit task ID starting from 1000
+// void *psp; // Task stack pointer (points to the task’s stack frame)
+// uint16_t status; // Task status: running, waiting, ready, killed, or terminated
+// uint8_t priority; // Task priority (lower value = higher priority)
+// uint16_t parent_id; // Task ID of parent process (if any)
+// uint32_t execution_time; // Total execution time in milliseconds
+// uint32_t waiting_time; // Total waiting time in milliseconds
+// uint32_t digital_signature; // Digital signature or integrity check (e.g., 0x00000001)
+// uint32_t w_chld[16]; // Array to store suspended child task IDs or signals from parent
+// uint32_t *heap_mem_start; // Pointer to dynamically allocated heap memory for the task
+// uint32_t heap_mem_size; // Size of allocated heap memory in bytes
+// uint32_t *open_resources[8]; // Pointers to resources (files, devices) opened by the task
+// uint8_t sem_waiting_count; // Number of semaphores the task is currently waiting on
+// uint8_t mutex_locked_count; // Number of mutexes the task currently holds
+// uint32_t last_wakeup_time; // Timestamp of last wakeup (for sleep or delay)
+// } TCB_TypeDef;
+
 #if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
   #ifndef __weak
     #define __weak  __attribute__((weak))

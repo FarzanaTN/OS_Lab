@@ -27,11 +27,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-
+#include <kunistd.h>
 #include <sys_init.h>
 #include <cm4.h>
 #include <kmain.h>
-#include <stdint.h>
 #include <sys_usart.h>
 #include <kstdio.h>
 #include <sys_rtc.h>
@@ -42,39 +41,44 @@
 void kmain(void)
 {
     __sys_init();
-    //uint32_t last_ms = 0;
-    // uint32_t timeee = __get__Second();
-    // kprintf("Time passed total: %d seconds\n", timeee);
+
+    kprintf("System initialized. Timer + syscall test...\n");
+    uint16_t pid = k_getpid();
+    kprintf("Running with PID: %d\n", pid);
+
+    // // int last_time = k_get_time();
+    // int elapsed_seconds = 0;
+
+    // unsigned char buf[10]; // buffer to store input
+    // int n;
+
+    // kprintf("Please type a character: ");
+
+    // // Call k_read for 1 byte from UART (fd = 0 for UART2, for example)
+    // n = k_read(STDIN_FILENO, buf, 1);
+
+    // if (n == 1)
+    // {
+    //     kprintf("\nYou typed: %c\n", buf[0]);
+    // }
+    // else
+    // {
+    //     kprintf("\nk_read failed or no input received\n");
+    // }
+
+    // kprintf("while loop starting...\n");
     while (1)
     {
-        
-    //    uint32_t now_ms = __getTime();   // returns current time in ms
-    // if (now_ms - last_ms >= 10)      // 30 ms elapsed
-    //{
-        //last_ms = now_ms;
 
-        uint32_t seconds = __get__Second();
+        // uint32_t seconds = __get__Second();
+        // kprintf("Time passed total: %d seconds\n", seconds);
+        // ms_delay(1000);
+
+        // kprintf("Reading RTC time:\n");
+
+        uint32_t seconds = k_get_time();
         kprintf("Time passed total: %d seconds\n", seconds);
         ms_delay(1000);
-        //kprintf("lastms variable %d\n", last_ms++);
-    //}
+        
     }
 }
-/*
-void kmain(void)
-{
-    __sys_init();  // make sure this calls __SysTick_init(SystemCoreClock/1000);
-
-    while (1)
-    {
-        uint32_t hours   = __get__Hour();
-        uint32_t minutes = __get__Minute() % 60;
-        uint32_t seconds = __get__Second() % 60;
-
-        kprintf("Stopwatch: %02d:%02d:%02d\n", hours, minutes, seconds);
-
-        ms_delay(1000); // update every second
-    }
-}
-*/
-

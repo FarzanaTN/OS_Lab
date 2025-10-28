@@ -32,5 +32,15 @@
 #define _SYSCALL_H
 #include <stdint.h>
 void syscall(uint16_t);
+/*
+My code starts here
+*/
+void __sys_write();
+void __sys_read();
+void __sys_reboot();
+void __sys_exit();
+void __sys_getpid();
+void __sys_gettime();
+void __sys_yield();
 #endif
 

@@ -34,5 +34,29 @@
 #define STDIN_FILENO  0      /* Standard input */
 #define STDOUT_FILENO 1      /* Standard output */
 #define STDERR_FILENO 2      /* Standard error */
+
+#include <stddef.h>
+#include <stdint.h>
+#include <stdarg.h>
+
+int fopen(unsigned char *s, uint32_t fd);
+int fclose(uint32_t fd);
+void k_exit(void) ;
+int fprintf(int fd, char *format, ...);
+uint16_t k_getpid(void) ;
+
+// attempts to read up to len bytes, returns the number of bytes read
+int k_read(int fd, unsigned char *s, int len);
+
+int k_write(uint32_t fd, unsigned char *s, size_t len) ;
+
+int k_get_time(void) ;
+
+void k_reboot(void)  ;
+
+void k_yield(void);
+
+
 #endif /* KERN_UNISTD_H */
+
 

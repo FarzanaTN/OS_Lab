@@ -89,11 +89,14 @@ void SYS_ROUTINE(void)
 * Each line displays a student or group member information
 */
 void display_group_info(void)
-{
+{	
+	kprintf("*****************************\n");
 	kprintf("Empty Group!! -- Update Now\n");
-	kprintf("Group No: B ");
+	kprintf("Group No: B-18 \n");
 	kprintf("Farzana Tasnim (14)\n");
 	kprintf("Amina Islam (36)\n");
 	kprintf("Rezaunnabi Ruhan (58)\n");
+	kprintf("*****************************\n");
+
 
 }

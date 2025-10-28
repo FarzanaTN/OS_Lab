@@ -137,8 +137,7 @@ void __updateSysTick(uint32_t count)
 
 uint32_t __getTime(void)
 {
-    //return (_systick_count+(SYSTICK->LOAD-SYSTICK->VAL)/(PLL_N*1000));
-
+    //return (_systick_count+(SYSTICK->LOAD-SYSTICK->VAL)/(PLL_N*1000));    
     return _systick_count;
     //return (uint32_t)(_systick_count * SYSTICK->LOAD) + (SYSTICK->LOAD - SYSTICK->VAL);
 }

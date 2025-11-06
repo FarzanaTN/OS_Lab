@@ -118,6 +118,12 @@ void putstr(const uint8_t *str,size_t size)
 	}
 }
 
+int kputchar(int ch)
+{
+    Uart_write(ch, __CONSOLE);
+    return ch;
+}
+
 // Simplified version of scanf
 void kscanf(char *format,...)
 {

@@ -49,7 +49,7 @@ uint16_t  k_getpid(void) {
 
 // attempts to read up to len bytes, returns the number of bytes read
 int  k_read(int fd, unsigned char *s, int len) {
-    kprintf("In k_read\n");
+    // kprintf("In k_read\n");
     int ret;
     __asm volatile ("MOV R1, %0" : : "r" (fd));
     __asm volatile ("MOV R2, %0" : : "r" (s));
@@ -60,21 +60,24 @@ int  k_read(int fd, unsigned char *s, int len) {
 }
 
 int  k_write(uint32_t fd, unsigned char *s, size_t len) {
-    int ret;
+    // kprintf("In kwrite\n");
+    volatile int ret = 0;
     __asm volatile ("MOV R0, %0" : : "r" (fd));
     __asm volatile ("MOV R1, %0" : : "r" (s));
     __asm volatile ("MOV R2, %0" : : "r" (len));
     __asm volatile ("MOV R12, %0" : : "r" (&ret));
     __asm volatile("SVC #55");
+    // kprintf("kwrite done\n");
     return ret;
 }
 
+
 int  k_get_time(void) {
-    kprintf("In k_get_time\n");
+    // kprintf("In k_get_time\n");
     unsigned int time = 0;
     __asm volatile ("MOV R1, %0" : : "r" (&time));//(pointer pass to kernel) places the address of time into R1. This is the pointer where the kernel will write the result.
     __asm volatile ("SVC #113");    //trigger system call
-    kprintf("Time from k_get_time: %d ms\n", time);
+    // kprintf("Time from k_get_time: %d ms\n", time);
     return (int)(time);
 }
 

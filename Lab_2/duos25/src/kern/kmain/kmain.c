@@ -38,35 +38,83 @@
 #ifndef DEBUG
 #define DEBUG 1
 #endif
+#define MAX_READ_LEN 64
 void kmain(void)
 {
     __sys_init();
 
-    kprintf("System initialized. Timer + syscall test...\n");
-    uint16_t pid = k_getpid();
-    kprintf("Running with PID: %d\n", pid);
 
-    // // int last_time = k_get_time();
-    // int elapsed_seconds = 0;
+    for(volatile int i = 0; i < 5000000; i++);
 
-    // unsigned char buf[10]; // buffer to store input
-    // int n;
+    // kprintf("System initialized. Timer + syscall test...\n");
+    // uint16_t pid = k_getpid();
+    // kprintf("Running with PID: %d\n", pid);
 
-    // kprintf("Please type a character: ");
+    // 1. Define the message and its length
+    const char *message = "Hello from kmain via k_write syscall!\n";
+    size_t message_len = 39; // Length of the string
 
-    // // Call k_read for 1 byte from UART (fd = 0 for UART2, for example)
-    // n = k_read(STDIN_FILENO, buf, 1);
+    // 2. Define the file descriptor for Standard Output (usually 1)
+    uint32_t stdout_fd = 1;
 
-    // if (n == 1)
+    // 3. Call k_write
+    int bytes_written = k_write(
+        stdout_fd,
+        (unsigned char *)message, // Cast to unsigned char* as required by k_write
+        message_len
+    );
+
+    // Optional: Print a status message (if another basic print function exists)
+    // or halt the system.
+    // if (bytes_written > 0) {
+    //     // Success
+    //     kprintf("yeee write done\n");
+    // } else {
+    //     // Handle error (e.g., if k_write returns a negative value)
+    //     kprintf("sad\n");
+    // }
+
+// Test direct k_write call
+    // unsigned char msg[] = "Hello";
+    // int bytes_written = k_write(STDOUT_FILENO, msg, __strlen(msg));
+    // kprintf("k_write returned: %d bytes\r\n", bytes_written);
+
+    
+    // 1. Prepare the buffer and length
+    unsigned char input_buffer[MAX_READ_LEN];
+    // Ensure the buffer is terminated if needed, or clear it.
+    input_buffer[0] = '\0'; 
+
+    // 2. Define the file descriptor for Standard Input (usually 0)
+    int stdin_fd = 0;
+
+    // 3. Call k_read
+    int bytes_read = k_read(
+        stdin_fd,
+        input_buffer,
+        MAX_READ_LEN - 1 // Read up to N-1 bytes to reserve space for the null terminator
+    );
+
+    // // 4. Process the result
+    // if (bytes_read > 0)
     // {
-    //     kprintf("\nYou typed: %c\n", buf[0]);
+    //     // Null-terminate the string for safe printing, in case the kernel didn't
+    //     input_buffer[bytes_read] = '\0'; 
+    //     kprintf("--- k_read Result ---");
+    //     kprintf("\nReceived %d bytes:\n", bytes_read);
+    //     kprintf("Data: %s\n", input_buffer);
+    // }
+    // else if (bytes_read == 0)
+    // {
+    //     kprintf("Read operation return 0\n");
     // }
     // else
     // {
-    //     kprintf("\nk_read failed or no input received\n");
+    //     // Handle error (bytes_read < 0, typically)
+    //     kprintf("Error during k_read: \n");
     // }
 
-    // kprintf("while loop starting...\n");
+    
     while (1)
     {
 

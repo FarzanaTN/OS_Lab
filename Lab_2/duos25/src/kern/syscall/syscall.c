@@ -38,7 +38,14 @@
 #include <cm4.h>
 #include <types.h>
 #include <kmain.h>
-
+#include <system_config.h>
+#include<kstring.h>
+ #include <stdarg.h>
+#include <kstdio.h>
+#include <sys_usart.h>
+#include <UsartRingBuffer.h>
+#include <kstring.h>
+#include <float.h>
 void __sys_getpid(void)
 {
     unsigned int *svc_args;
@@ -133,6 +140,59 @@ void __sys_write(void)
 
     return; // Exit syscall
 }
+
+
+// void __sys_write(void)
+// {
+//     unsigned int *svc_args;
+//     unsigned char *s;
+//     unsigned char buff[100];  // Temporary kernel buffer
+//     int len = 0;
+
+//     // R1 holds pointer to stacked syscall arguments
+//     __asm volatile("MOV %0, R1" : "=r"(svc_args) :);
+
+//     // svc_args[1] = user string pointer
+//     s = (unsigned char *)svc_args[1];
+
+//     // Copy from user string to local buffer (like your example)
+//     len = __strlen(s);
+//     for (int i = 0; i <= len; i++)
+//         buff[i] = s[i];
+
+//     // Print the copied buffer through USART2
+//     int written = _USART_WRITE(USART2, buff);
+
+//     // Return number of bytes written
+//     *((int *)svc_args[4]) = written;
+
+//     return;
+// }
+
+
+// void __sys_write(void)
+// {
+//     unsigned int *svc_args;
+//     unsigned char *s;
+
+//     // R1 holds pointer to stacked syscall arguments
+//     __asm volatile("MOV %0, R1" : "=r"(svc_args) :);
+
+//     // svc_args[1] = user string pointer
+//     s = (unsigned char *)svc_args[1];
+
+//     // Call the working UART function to send string
+//     Uart_sendstring((char *)s, __CONSOLE);
+
+//     // Return number of bytes written
+//     // Assuming Uart_sendstring returns nothing, we just return string length
+//     *((int *)svc_args[4]) = __strlen(s);
+
+//     return;
+// }
+
+
+
 
 void __sys_close(void)
 {
